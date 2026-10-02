@@ -1,0 +1,3 @@
+[submodule ".agents/skills/guizang-ppt-skill"]
+	path = .agents/skills/guizang-ppt-skill
+	url = https://github.com/op7418/guizang-ppt-skill.git
