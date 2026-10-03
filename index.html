@@ -2462,6 +2462,41 @@
         grid-template-columns: 1fr
       }
     }
+
+    .code-box-wrap {
+      position: relative;
+    }
+
+    .code-del {
+      text-decoration: line-through;
+      text-decoration-color: #c94a29;
+      text-decoration-thickness: 2px;
+      opacity: 0.55;
+    }
+
+    /* C++ syntax highlighting (Warm Editorial / Swiss palette) */
+    .tok-kw {
+      color: #8e3b12;
+      font-weight: 600;
+    }
+
+    .tok-type {
+      color: #1b4d79;
+      font-weight: 600;
+    }
+
+    .tok-fn {
+      color: #4338ca;
+    }
+
+    .tok-num {
+      color: #0d6850;
+    }
+
+    .tok-com {
+      color: #7a6e60;
+      font-style: italic;
+    }
   </style>
 </head>
 
@@ -2516,12 +2551,12 @@
       style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
       <div class="chrome">
         <div class="left">
-          <span>COMPILER OPTIMIZATION</span>
-          <span class="sep"></span>
-          <span>KEYNOTE</span>
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">Write
+            Clean, Compile Smart</span>
         </div>
         <div class="right">
-          <span>01 / 02</span>
+          <span>01 / 14</span>
         </div>
       </div>
 
@@ -2536,9 +2571,10 @@
         <h2 class="h-sub" data-anim style="color:#493526; font-size:2vw; font-weight:400; opacity:1">
           Stop micro-optimizing. Let modern compilers do the heavy lifting.
         </h2>
-        <div class="meta-row" data-anim
-          style="color:#493526; border-top:1px solid rgba(42,30,19,.2); padding-top:2vh">
+        <div class="meta-row" data-anim style="color:#493526; border-top:1px solid rgba(42,30,19,.2); padding-top:2vh">
           <span>PRESS [P] FOR PRESENTER</span>
+          <span>·</span>
+          <span>PRESS [ESC] FOR OVERVIEW</span>
           <span>·</span>
           <span>→ SWIPE / ARROWS</span>
         </div>
@@ -2546,74 +2582,882 @@
 
       <div class="foot">
         <div class="title">Write Clean, Compile Smart</div>
-        <div>01 / 03</div>
+        <div>01 / 14</div>
       </div>
     </section>
 
-    <!-- Slide 02: Step-by-step Code Optimization Case -->
-    <section class="slide light" data-animate="pipeline" data-slide-id="increment-optimization"
+    <!-- Slide 02: Measure performance in a for loop -->
+    <section class="slide light" data-animate="pipeline" data-slide-id="bench-for-loop"
       style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
       <div class="chrome">
         <div class="left">
-          <span>CASE STUDY</span>
-          <span class="sep"></span>
-          <span>COMPILER OPTIMIZATION</span>
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">Measure
+            performance in a for loop</span>
         </div>
         <div class="right">
-          <span>02 / 03</span>
+          <span>02 / 14</span>
         </div>
       </div>
 
       <div class="frame"
-        style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:3.5vh">
-        <div>
-          <h2 class="h-md" style="color:#2a1e13; font-size:clamp(34px,4vw,64px); line-height:1.08; margin:0">
-            <code style="font-family:var(--mono); color:#9a5725; font-weight:600">i++</code> vs <code
-              style="font-family:var(--mono); color:#9a5725; font-weight:600">++i</code>: Which is Faster?
-          </h2>
+        style="display:flex; flex-direction:column; justify-content:flex-start; min-height:76vh; gap:1.2vh; box-sizing:border-box">
+        <div style="font-family:var(--sans-zh); font-size:clamp(13px,0.95vw,16px); color:#493526">
+          Some developer may bench the performance by following code
         </div>
 
-        <div class="grid-2-6-6" style="gap:2vw; align-items:stretch">
-          <div style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:3vh 2vw; display:flex; flex-direction:column; gap:2vh">
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1vw">
-              <pre style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:2vh 1.2vw; font-family:var(--mono); font-size:clamp(14px,1.2vw,20px); color:#2a1e13; line-height:1.65"><code>i++
-for(int i = 0; i &lt; 10000; i++) {
+        <div class="grid-2-6-6" style="gap:1.6vw; align-items:stretch">
+          <div
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:1.8vh 1.4vw; display:flex; flex-direction:column; gap:1vh">
+            <div class="code-box-wrap">
+              <pre
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1vh 0.9vw; font-family:var(--mono); font-size:clamp(11px,0.78vw,13.5px); color:#2a1e13; line-height:1.32"><code class="language-cpp"><span class="tok-type">int</span> <span class="tok-fn">main</span>(){
+    <span class="tok-type">int</span> startTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-kw">for</span>(<span class="tok-type">int</span> i = <span class="tok-num">0</span>; i&lt;<span class="tok-num">10000000</span>;i++){
+
+    }
+    <span class="tok-type">int</span> endTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost1 = endTime1-startTime1;
+    <span class="tok-fn">print</span>(timeCost1);
+    <span class="tok-type">int</span> startTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-kw">for</span>(<span class="tok-type">int</span> i = <span class="tok-num">0</span>; i&lt;<span class="tok-num">10000000</span>;++i){
+    
+    }
+    <span class="tok-type">int</span> endTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost2 = endTime2-startTime2;
+    <span class="tok-fn">print</span>(timeCost2);
 }</code></pre>
-              <pre style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:2vh 1.2vw; font-family:var(--mono); font-size:clamp(14px,1.2vw,20px); color:#2a1e13; line-height:1.65"><code>++i
-for(int i = 0; i &lt; 10000; ++i) {
-}</code></pre>
+            </div>
+            <div
+              style="font-family:var(--mono); font-size:clamp(11px,0.85vw,13.5px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:0.8vh 0.8vw">
+              <strong>Question: Which one is correct</strong><br>
+              <span style="color:#9a5725; font-weight:700">A:</span> I did similar bench in the past &nbsp;|&nbsp; <span
+                style="color:#9a5725; font-weight:700">B:</span> No, I didn't
             </div>
           </div>
 
           <div class="step" data-anim="step"
-            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:3vh 2vw; display:flex; flex-direction:column; justify-content:center; gap:2.5vh">
-            <div style="font-size:clamp(25px,2.5vw,40px); color:#2a1e13; font-weight:700; line-height:1.2">
-              They perform the same.
+            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:1.8vh 1.4vw; display:flex; flex-direction:column; gap:1vh">
+            <div style="font-size:clamp(15px,1.15vw,20px); color:#2a1e13; font-weight:700; line-height:1.2">
+              Answer:
             </div>
-            <div style="font-size:clamp(18px,1.6vw,26px); color:#493526; line-height:1.45">
-              When the result is unused, the compiler removes the extra temporary.
+            <div style="font-size:clamp(12px,0.85vw,14.5px); color:#493526; line-height:1.45">
+              compiler can optimize out empty blocks including empty if/for/while etc. So the code become:
             </div>
-            <pre style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:2vh 1.2vw; font-family:var(--mono); font-size:clamp(16px,1.35vw,22px); color:#2a1e13; line-height:1.6"><code>i = i + 1;</code></pre>
+            <div class="code-box-wrap">
+              <pre
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1vh 0.9vw; font-family:var(--mono); font-size:clamp(11px,0.78vw,13.5px); color:#2a1e13; line-height:1.32"><code class="language-cpp"><span class="tok-type">int</span> <span class="tok-fn">main</span>(){
+    <span class="tok-type">int</span> startTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> endTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost1 = endTime1-startTime1;
+    <span class="tok-fn">print</span>(timeCost1);
+    <span class="tok-type">int</span> startTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> endTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost2 = endTime2-startTime2;
+    <span class="tok-fn">print</span>(timeCost2);
+}</code></pre>
+            </div>
+            <div
+              style="font-size:clamp(11.5px,0.82vw,14px); color:#493526; line-height:1.4; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:0.8vh 0.8vw">
+              So the final timeCost1 and timeCost2 are very small numbers. And the actual value depends on the OS
+              interference factors, such as scheduling and timer interrupt.
+            </div>
           </div>
         </div>
       </div>
 
       <div class="foot">
-        <div class="title">i++ vs ++i</div>
-        <div>02 / 03</div>
+        <div></div>
+        <div>02 / 14</div>
       </div>
     </section>
 
+    <!-- Slide 03: i++ and ++i -->
+    <section class="slide light" data-animate="pipeline" data-slide-id="increment-optimization"
+      style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
+      <div class="chrome">
+        <div class="left">
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">i++
+            and ++i</span>
+        </div>
+        <div class="right">
+          <span>03 / 14</span>
+        </div>
+      </div>
+
+      <div class="frame"
+        style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2.8vh">
+        <div class="grid-2-6-6" style="gap:2vw; align-items:stretch">
+          <div
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2.5vh 1.8vw; display:flex; flex-direction:column; gap:1.8vh">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1vw">
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:2vh 1.2vw; font-family:var(--mono); font-size:clamp(13px,1.05vw,17px); color:#2a1e13; line-height:1.6"><code class="language-cpp"><span class="tok-kw">for</span>(<span class="tok-type">int</span> i = <span class="tok-num">0</span>; i &lt; <span class="tok-num">10000</span>; i++){
+    <span class="tok-com">// some code</span>
+}</code></pre>
+              </div>
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:2vh 1.2vw; font-family:var(--mono); font-size:clamp(13px,1.05vw,17px); color:#2a1e13; line-height:1.6"><code class="language-cpp"><span class="tok-kw">for</span>(<span class="tok-type">int</span> i = <span class="tok-num">0</span>; i &lt; <span class="tok-num">10000</span>; ++i){
+    <span class="tok-com">// some code</span>
+}</code></pre>
+              </div>
+            </div>
+            <div
+              style="font-family:var(--mono); font-size:clamp(12px,0.9vw,15px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:1vh 1vw">
+              <strong>Question: which is faster</strong><br>
+              <strong>Options:</strong><br>
+              A: i++ faster &nbsp;|&nbsp; B: ++i faster &nbsp;|&nbsp; C: same
+            </div>
+          </div>
+
+          <div class="step" data-anim="step"
+            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:2.5vh 1.8vw; display:flex; flex-direction:column; justify-content:center; gap:1.8vh">
+            <div style="font-size:clamp(15px,1.15vw,20px); color:#2a1e13; font-weight:700; line-height:1.2">
+              Answer:
+            </div>
+            <div style="font-size:clamp(13px,1vw,17px); color:#493526; line-height:1.55">
+              the performance is the same because compiler eliminate unused value assignment.
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1vw">
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.5vh 1vw; font-family:var(--mono); font-size:clamp(13px,1vw,17px); color:#2a1e13; line-height:1.5"><code class="language-cpp"><del class="code-del">tmp = i</del>
+i = i + <span class="tok-num">1</span></code></pre>
+              </div>
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.5vh 1vw; font-family:var(--mono); font-size:clamp(13px,1vw,17px); color:#2a1e13; line-height:1.5"><code class="language-cpp">i = i + <span class="tok-num">1</span>
+<del class="code-del">tmp = i</del></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div></div>
+        <div>03 / 14</div>
+      </div>
+    </section>
+
+    <!-- Slide 04: swap two variables -->
+    <section class="slide light" data-animate="pipeline" data-slide-id="swap-variables"
+      style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
+      <div class="chrome">
+        <div class="left">
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">swap
+            two variables</span>
+        </div>
+        <div class="right">
+          <span>04 / 14</span>
+        </div>
+      </div>
+
+      <div class="frame"
+        style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2.8vh">
+        <div class="grid-2-6-6" style="gap:2vw; align-items:stretch">
+          <div
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2.5vh 1.8vw; display:flex; flex-direction:column; gap:1.8vh">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1vw">
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:2vh 1.2vw; font-family:var(--mono); font-size:clamp(13px,1.05vw,17px); color:#2a1e13; line-height:1.6"><code class="language-cpp"><span class="tok-type">int</span> temp = a;
+a = b;
+b = temp;</code></pre>
+              </div>
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:2vh 1.2vw; font-family:var(--mono); font-size:clamp(13px,1.05vw,17px); color:#2a1e13; line-height:1.6"><code class="language-cpp">a = a ^ b;
+b = a ^ b;
+a = a ^ b;</code></pre>
+              </div>
+            </div>
+            <div
+              style="font-family:var(--mono); font-size:clamp(12px,0.95vw,15px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:1vh 1vw">
+              <strong>Question: Which way should we use to swap two variables? Is avoiding temp faster?</strong>
+            </div>
+          </div>
+
+          <div class="step" data-anim="step"
+            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:2.5vh 1.8vw; display:flex; flex-direction:column; justify-content:center; gap:2vh">
+            <div style="font-size:clamp(15px,1.15vw,20px); color:#2a1e13; font-weight:700; line-height:1.2">
+              Answer:
+            </div>
+            <div style="font-size:clamp(14px,1.1vw,18px); color:#493526; line-height:1.6">
+              On modern processors, a normal variable swap can be handled efficiently with registers and register
+              renaming. XOR swapping occupies the ALU with several dependent instructions, so instruction-level
+              parallelism is poor.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div></div>
+        <div>04 / 14</div>
+      </div>
+    </section>
+
+    <!-- Slide 05: how to iterate over an array -->
+    <section class="slide light" data-animate="pipeline" data-slide-id="array-iteration"
+      style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
+      <div class="chrome">
+        <div class="left">
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">how
+            to iterate over an array</span>
+        </div>
+        <div class="right">
+          <span>05 / 14</span>
+        </div>
+      </div>
+
+      <div class="frame"
+        style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2.8vh">
+        <div class="grid-2-6-6" style="gap:2vw; align-items:stretch">
+          <div
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2.5vh 1.8vw; display:flex; flex-direction:column; gap:1.6vh">
+            <div class="code-box-wrap">
+              <pre
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.6vh 1.2vw; font-family:var(--mono); font-size:clamp(13px,1.05vw,17px); color:#2a1e13; line-height:1.55"><code class="language-cpp"><span class="tok-kw">for</span>(<span class="tok-type">int</span> i = <span class="tok-num">0</span>;i&lt;<span class="tok-type">array</span>.<span class="tok-fn">size</span>();i++){
+
+}</code></pre>
+            </div>
+            <div class="code-box-wrap">
+              <pre
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.6vh 1.2vw; font-family:var(--mono); font-size:clamp(13px,1.05vw,17px); color:#2a1e13; line-height:1.55"><code class="language-cpp"><span class="tok-type">int</span> size = <span class="tok-type">array</span>.<span class="tok-fn">size</span>();
+<span class="tok-kw">for</span>(<span class="tok-type">int</span> i = <span class="tok-num">0</span>;i&lt;size;i++){
+    
+}</code></pre>
+            </div>
+            <div
+              style="font-family:var(--mono); font-size:clamp(12px,0.95vw,15px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:0.8vh 1vw">
+              <strong>Question: which one is faster? why?</strong>
+            </div>
+          </div>
+
+          <div class="step" data-anim="step"
+            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:2.5vh 1.8vw; display:flex; flex-direction:column; justify-content:center; gap:1.6vh">
+            <div style="font-size:clamp(15px,1.15vw,20px); color:#2a1e13; font-weight:700; line-height:1.2">
+              Answer:
+            </div>
+            <div style="font-size:clamp(13px,1vw,16px); color:#493526; line-height:1.55">
+              Compiler has loop invariant code motion. The array.size() function will be called multi times during the
+              loop when the array size is unchanged in the loop. Moreover, compiler also inline small function calls, so
+              the <code style="font-family:var(--mono); color:#9a5725">.size()</code> function call will not exist.
+              Instead, it will be optimized to <code style="font-family:var(--mono); color:#9a5725">array._size</code>
+              attribute read.
+            </div>
+            <div
+              style="font-size:clamp(13px,1vw,16px); color:#493526; line-height:1.55; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.4vh 1.2vw">
+              <code style="font-family:var(--mono); color:#9a5725">int size = array.size();</code> is also not a
+              performance problem, because compiler has variable liveness analysis. The storage allocated for <code
+                style="font-family:var(--mono); color:#9a5725">int size</code> can be reused by other variables after
+              the for loop.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div></div>
+        <div>05 / 14</div>
+      </div>
+    </section>
+
+    <!-- Slide 06: named constants vs magic number -->
+    <section class="slide light" data-animate="pipeline" data-slide-id="named-constants"
+      style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
+      <div class="chrome">
+        <div class="left">
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">named
+            constants vs magic number</span>
+        </div>
+        <div class="right">
+          <span>06 / 14</span>
+        </div>
+      </div>
+
+      <div class="frame"
+        style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2.8vh">
+        <div class="grid-2-6-6" style="gap:2vw; align-items:stretch">
+          <div
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2.4vh 1.8vw; display:flex; flex-direction:column; gap:1.4vh">
+            <div class="code-box-wrap">
+              <pre
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.4vh 1.2vw; font-family:var(--mono); font-size:clamp(12px,0.98vw,15.5px); color:#2a1e13; line-height:1.45"><code class="language-cpp"><span class="tok-type">int</span> hoursInDay = <span class="tok-num">24</span>;
+<span class="tok-type">int</span> minutesInHour = <span class="tok-num">60</span>;
+<span class="tok-type">int</span> secondsInMinute = <span class="tok-num">60</span>;
+<span class="tok-type">int</span> millisecondsInSecond = <span class="tok-num">1000</span>;
+
+<span class="tok-type">int</span> millisecondsInDay = hoursInDay * minutesInHour * secondsInMinute * millisecondsInSecond;</code></pre>
+            </div>
+            <div class="code-box-wrap">
+              <pre
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.2vh 1.2vw; font-family:var(--mono); font-size:clamp(12px,1vw,16px); color:#2a1e13; line-height:1.45"><code class="language-cpp"><span class="tok-type">int</span> millisecondsInDay = <span class="tok-num">86400000</span>;</code></pre>
+            </div>
+            <div
+              style="font-family:var(--mono); font-size:clamp(11.5px,0.9vw,14.5px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:0.8vh 1vw">
+              <strong>Question: Which version is easier to understand? Does the first version do more work at
+                runtime?</strong>
+            </div>
+          </div>
+
+          <div class="step" data-anim="step"
+            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:2.4vh 1.8vw; display:flex; flex-direction:column; justify-content:center; gap:1.6vh">
+            <div style="font-size:clamp(15px,1.15vw,20px); color:#2a1e13; font-weight:700; line-height:1.2">
+              Answer:
+            </div>
+            <div style="font-size:clamp(13px,1vw,16.5px); color:#493526; line-height:1.55">
+              The named constants make the units and intent clear. The compiler has const propagation to calculate the
+              product ahead of time, so the first version does not need to perform those multiplications at runtime.
+            </div>
+            <div
+              style="font-size:clamp(13px,1vw,16px); color:#493526; line-height:1.55; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.4vh 1.2vw">
+              Prefer the readable version over the magic number. One more note, some programming language can declare
+              variable as const, but compiler const propagation doesn't rely on the const qualifier.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div></div>
+        <div>06 / 14</div>
+      </div>
+    </section>
+
+    <!-- Slide 07: variable reuse -->
+    <section class="slide light" data-animate="pipeline" data-slide-id="variable-reuse"
+      style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
+      <div class="chrome">
+        <div class="left">
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">variable
+            reuse</span>
+        </div>
+        <div class="right">
+          <span>07 / 14</span>
+        </div>
+      </div>
+
+      <div class="frame"
+        style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2.8vh">
+        <div class="grid-2-6-6" style="gap:2vw; align-items:stretch">
+          <div
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2.4vh 1.8vw; display:flex; flex-direction:column; gap:1.4vh">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1vw">
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.4vh 1vw; font-family:var(--mono); font-size:clamp(12px,1vw,15.5px); color:#2a1e13; line-height:1.5"><code class="language-cpp"><span class="tok-type">int</span> milage = <span class="tok-fn">getMilage</span>();
+<span class="tok-fn">dataProcess1</span>(milage);
+<span class="tok-type">int</span> velocity = <span class="tok-fn">getVelocity</span>();
+<span class="tok-fn">dataProcess2</span>(velocity);</code></pre>
+              </div>
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.4vh 1vw; font-family:var(--mono); font-size:clamp(12px,1vw,15.5px); color:#2a1e13; line-height:1.5"><code class="language-cpp"><span class="tok-type">int</span> val = <span class="tok-fn">getMilage</span>();
+<span class="tok-fn">dataProcess1</span>(val);
+val = <span class="tok-fn">getVelocity</span>();
+<span class="tok-fn">dataProcess2</span>(val);</code></pre>
+              </div>
+            </div>
+            <div
+              style="font-family:var(--mono); font-size:clamp(11.5px,0.9vw,14.5px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:0.8vh 1vw">
+              <strong>Question: Some developers changed code snap 1 to code snap 2, what did they aim to do? Does it
+                work?</strong>
+            </div>
+          </div>
+
+          <div class="step" data-anim="step"
+            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:2.4vh 1.8vw; display:flex; flex-direction:column; justify-content:center; gap:1.6vh">
+            <div style="font-size:clamp(15px,1.15vw,20px); color:#2a1e13; font-weight:700; line-height:1.2">
+              Answer:
+            </div>
+            <div style="font-size:clamp(13px,1vw,16.5px); color:#493526; line-height:1.55">
+              compiler's liveness analysis can reuse storage of variables, so developers don't need to reuse variable to
+              save memory.
+            </div>
+            <div style="background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.2vh 1vw">
+              <div style="font-size:clamp(12px,0.92vw,15px); color:#493526; line-height:1.5; margin-bottom:0.8vh">
+                Similarly, there is no need to remove meaningful intermediate variable.
+              </div>
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; font-family:var(--mono); font-size:clamp(12px,0.95vw,15px); color:#2a1e13; line-height:1.45"><code class="language-cpp"><span class="tok-type">int</span> priceAfterDiscount = price - discount;
+<span class="tok-type">int</span> finalPrice = priceAfterDiscount + shipping;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div></div>
+        <div>07 / 14</div>
+      </div>
+    </section>
+
+    <!-- Slide 08: x/2 vs x>>1 -->
+    <section class="slide light" data-animate="pipeline" data-slide-id="strength-reduction"
+      style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
+      <div class="chrome">
+        <div class="left">
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">x/2
+            vs x&gt;&gt;1</span>
+        </div>
+        <div class="right">
+          <span>08 / 14</span>
+        </div>
+      </div>
+
+      <div class="frame"
+        style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2.8vh">
+        <div class="grid-2-6-6" style="gap:2vw; align-items:stretch">
+          <div
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2.5vh 1.8vw; display:flex; flex-direction:column; gap:1.8vh">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1vw">
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:2vh 1.2vw; font-family:var(--mono); font-size:clamp(13px,1.05vw,17px); color:#2a1e13; line-height:1.6"><code class="language-cpp"><span class="tok-type">int</span> <span class="tok-fn">foo</span>(<span class="tok-type">int</span> diameter){
+    <span class="tok-type">int</span> radius = diameter/<span class="tok-num">2</span>;
+    <span class="tok-kw">return</span> radius;
+}</code></pre>
+              </div>
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:2vh 1.2vw; font-family:var(--mono); font-size:clamp(13px,1.05vw,17px); color:#2a1e13; line-height:1.6"><code class="language-cpp"><span class="tok-type">int</span> <span class="tok-fn">foo</span>(<span class="tok-type">int</span> diameter){
+    <span class="tok-type">int</span> radius = diameter&gt;&gt;<span class="tok-num">1</span>;
+    <span class="tok-kw">return</span> radius;
+}</code></pre>
+              </div>
+            </div>
+            <div
+              style="font-family:var(--mono); font-size:clamp(12px,0.95vw,15px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:1vh 1vw">
+              <strong>Question: Which one do you prefer? Why?</strong>
+            </div>
+          </div>
+
+          <div class="step" data-anim="step"
+            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:2.5vh 1.8vw; display:flex; flex-direction:column; justify-content:center; gap:2vh">
+            <div style="font-size:clamp(15px,1.15vw,20px); color:#2a1e13; font-weight:700; line-height:1.2">
+              Answer:
+            </div>
+            <div style="font-size:clamp(14px,1.1vw,18px); color:#493526; line-height:1.6">
+              Compiler has strength reduction, <code style="font-family:var(--mono); color:#9a5725">x/2</code> will be
+              optimized by <code style="font-family:var(--mono); color:#9a5725">x&gt;&gt;1</code> automatic, so
+              developers can leave <code style="font-family:var(--mono); color:#9a5725">x/2</code> to keep code
+              readable.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div></div>
+        <div>08 / 14</div>
+      </div>
+    </section>
+
+    <!-- Slide 09: how to bench x/2 and x>>1 -->
+    <section class="slide light" data-animate="pipeline" data-slide-id="bench-strength-reduction"
+      style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
+      <div class="chrome">
+        <div class="left">
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">how
+            to bench x/2 and x&gt;&gt;1</span>
+        </div>
+        <div class="right">
+          <span>09 / 14</span>
+        </div>
+      </div>
+
+      <div class="frame" style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2vh">
+        <div class="grid-2-6-6" style="gap:2vw; align-items:stretch">
+          <div
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2vh 1.6vw; display:flex; flex-direction:column; gap:1.2vh">
+            <div class="code-box-wrap">
+              <pre
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.2vh 1vw; font-family:var(--mono); font-size:clamp(11.5px,0.85vw,14.5px); color:#2a1e13; line-height:1.35"><code class="language-cpp"><span class="tok-type">int</span> <span class="tok-fn">main</span>(){
+    <span class="tok-type">int</span> startTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-kw">for</span>(<span class="tok-type">int</span> i = <span class="tok-num">0</span>; i&lt;<span class="tok-num">10000000</span>;i++){
+        <span class="tok-type">int</span> x = i/<span class="tok-num">2</span>;
+    }
+    <span class="tok-type">int</span> endTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost1 = endTime1-startTime1;
+    <span class="tok-fn">print</span>(timeCost1);
+    <span class="tok-type">int</span> startTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-kw">for</span>(<span class="tok-type">int</span> i = <span class="tok-num">0</span>; i&lt;<span class="tok-num">10000000</span>;++i){
+        <span class="tok-type">int</span> x = i&gt;&gt;<span class="tok-num">1</span>;
+    }
+    <span class="tok-type">int</span> endTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost2 = endTime2-startTime2;
+    <span class="tok-fn">print</span>(timeCost2);
+}</code></pre>
+            </div>
+            <div
+              style="font-family:var(--mono); font-size:clamp(11.5px,0.9vw,14.5px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:0.8vh 1vw">
+              <strong>Question: what's the result of this bench</strong>
+            </div>
+          </div>
+
+          <div class="step" data-anim="step"
+            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:2vh 1.6vw; display:flex; flex-direction:column; justify-content:center; gap:1.2vh">
+            <div style="font-size:clamp(15px,1.15vw,20px); color:#2a1e13; font-weight:700; line-height:1.2">
+              Answer: As mentioned above
+            </div>
+            <div style="font-size:clamp(12.5px,0.92vw,15.5px); color:#493526; line-height:1.5">
+              1. compiler can optimize out unused value assignment<br>
+              2. compiler can optimize out empty <code style="font-family:var(--mono); color:#9a5725">for</code>
+              blocks<br>
+              3. compiler run optimization passes may rounds, and each pass have dedicated target.
+            </div>
+            <div class="code-box-wrap">
+              <pre
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.2vh 1vw; font-family:var(--mono); font-size:clamp(11.5px,0.85vw,14.5px); color:#2a1e13; line-height:1.35"><code class="language-cpp"><span class="tok-type">int</span> <span class="tok-fn">main</span>(){
+    <span class="tok-type">int</span> startTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> endTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost1 = endTime1-startTime1;
+    <span class="tok-fn">print</span>(timeCost1);
+    <span class="tok-type">int</span> startTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> endTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost2 = endTime2-startTime2;
+    <span class="tok-fn">print</span>(timeCost2);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div></div>
+        <div>09 / 14</div>
+      </div>
+    </section>
+
+    <!-- Slide 10: how to bench x/2 and x>>1 further -->
+    <section class="slide light" data-animate="pipeline" data-slide-id="bench-strength-reduction-further"
+      style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
+      <div class="chrome">
+        <div class="left">
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">how
+            to bench x/2 and x&gt;&gt;1 further</span>
+        </div>
+        <div class="right">
+          <span>10 / 14</span>
+        </div>
+      </div>
+
+      <div class="frame" style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2vh">
+        <div class="grid-2-6-6" style="gap:1.2vh; align-items:stretch">
+          <div
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:1.2vh 1.4vw; display:flex; flex-direction:column; gap:0.8vh">
+            <div class="code-box-wrap">
+              <pre
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:0.8vh 0.8vw; font-family:var(--mono); font-size:clamp(10px,0.72vw,12px); color:#2a1e13; line-height:1.22"><code class="language-cpp"><span class="tok-type">int</span> <span class="tok-fn">main</span>(){
+    <span class="tok-type">int</span> startTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> sum1 = <span class="tok-num">0</span>;
+    <span class="tok-kw">for</span>(<span class="tok-type">int</span> i = <span class="tok-num">0</span>; i&lt;<span class="tok-num">100</span>;i++){
+        <span class="tok-type">int</span> x = i/<span class="tok-num">2</span>;
+        sum1 += x;
+    }
+    <span class="tok-type">int</span> endTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost1 = endTime1-startTime1;
+    <span class="tok-fn">print</span>(timeCost1);
+    <span class="tok-fn">print</span>(sum1);
+    <span class="tok-type">int</span> startTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> sum2 = <span class="tok-num">0</span>;
+    <span class="tok-kw">for</span>(<span class="tok-type">int</span> i = <span class="tok-num">0</span>; i&lt;<span class="tok-num">100</span>;++i){
+        <span class="tok-type">int</span> x = i&gt;&gt;<span class="tok-num">1</span>;
+        sum2 += x;
+    }
+    <span class="tok-type">int</span> endTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost2 = endTime2-startTime2;
+    <span class="tok-fn">print</span>(timeCost2);
+    <span class="tok-fn">print</span>(sum2);
+}</code></pre>
+            </div>
+            <div
+              style="font-family:var(--mono); font-size:clamp(11.5px,0.9vw,14.5px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:0.8vh 1vw">
+              <strong>Question: Can this code get correct bench result? Why?</strong>
+            </div>
+          </div>
+
+          <div class="step" data-anim="step"
+            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:1.2vh 1.4vw; display:flex; flex-direction:column; justify-content:center; gap:0.8vh">
+            <div style="font-size:clamp(15px,1.15vw,20px); color:#2a1e13; font-weight:700; line-height:1.2">
+              Answer:
+            </div>
+            <div style="font-size:clamp(12.5px,0.92vw,15.5px); color:#493526; line-height:1.5">
+              Compiler has loop variable induction and const propagation. The code will be optimized to print a compile
+              time const.
+            </div>
+            <div class="code-box-wrap">
+              <pre
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:0.8vh 0.8vw; font-family:var(--mono); font-size:clamp(10px,0.72vw,12px); color:#2a1e13; line-height:1.22"><code class="language-cpp"><span class="tok-type">int</span> <span class="tok-fn">main</span>(){
+    <span class="tok-type">int</span> startTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> endTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost1 = endTime1-startTime1;
+    <span class="tok-fn">print</span>(timeCost1);
+    <span class="tok-fn">print</span>(<span class="tok-num">2450</span>);
+    <span class="tok-type">int</span> startTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> endTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost2 = endTime2-startTime2;
+    <span class="tok-fn">print</span>(timeCost2);
+    <span class="tok-fn">print</span>(<span class="tok-num">2450</span>);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div></div>
+        <div>10 / 14</div>
+      </div>
+    </section>
+
+    <!-- Slide 11: code rely on runtime information -->
+    <section class="slide light" data-animate="pipeline" data-slide-id="compiler-limits-runtime"
+      style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
+      <div class="chrome">
+        <div class="left">
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">code
+            rely on runtime information</span>
+        </div>
+        <div class="right">
+          <span>11 / 14</span>
+        </div>
+      </div>
+
+      <div class="frame"
+        style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2.8vh">
+        <div class="grid-2-6-6" style="gap:2vw; align-items:stretch">
+          <div
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2.2vh 1.6vw; display:flex; flex-direction:column; gap:1.2vh">
+            <div class="code-box-wrap">
+              <pre
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.2vh 1vw; font-family:var(--mono); font-size:clamp(11px,0.8vw,14px); color:#2a1e13; line-height:1.3"><code class="language-cpp"><span class="tok-type">int</span> <span class="tok-fn">random</span>();
+
+<span class="tok-type">int</span> <span class="tok-fn">main</span>(){
+    <span class="tok-type">int</span> startTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> sum1 = <span class="tok-num">0</span>;
+    <span class="tok-kw">for</span>(<span class="tok-type">int</span> i = <span class="tok-num">0</span>; i&lt;<span class="tok-num">100</span>;i++){
+        <span class="tok-type">int</span> x = <span class="tok-fn">random</span>()/<span class="tok-num">2</span>;
+        sum1 += x;
+    }
+    <span class="tok-type">int</span> endTime1 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost1 = endTime1-startTime1;
+    <span class="tok-fn">print</span>(timeCost1);
+    <span class="tok-fn">print</span>(sum1);
+    <span class="tok-type">int</span> startTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> sum2 = <span class="tok-num">0</span>;
+    <span class="tok-kw">for</span>(<span class="tok-type">int</span> i = <span class="tok-num">0</span>; i&lt;<span class="tok-num">100</span>;++i){
+        <span class="tok-type">int</span> x = <span class="tok-fn">random</span>()&gt;&gt;<span class="tok-num">1</span>;
+        sum2 += x;
+    }
+    <span class="tok-type">int</span> endTime2 = <span class="tok-fn">getTime</span>();
+    <span class="tok-type">int</span> timeCost2 = endTime2-startTime2;
+    <span class="tok-fn">print</span>(timeCost2);
+    <span class="tok-fn">print</span>(sum2);
+}</code></pre>
+            </div>
+            <div
+              style="font-family:var(--mono); font-size:clamp(11.5px,0.9vw,14.5px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:0.8vh 1vw">
+              <strong>Question: Why compiler can't optimize this code?</strong>
+            </div>
+          </div>
+
+          <div class="step" data-anim="step"
+            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:2.5vh 1.8vw; display:flex; flex-direction:column; justify-content:center; gap:2vh">
+            <div style="font-size:clamp(15px,1.15vw,20px); color:#2a1e13; font-weight:700; line-height:1.2">
+              Answer:
+            </div>
+            <div style="font-size:clamp(14px,1.1vw,18px); color:#493526; line-height:1.6">
+              If code rely on runtime information, then compiler doesn't have enough context to optimize it at compile
+              time.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div></div>
+        <div>11 / 14</div>
+      </div>
+    </section>
+
+    <!-- Slide 12: wrong data structure selection -->
+    <section class="slide light" data-animate="pipeline" data-slide-id="compiler-limits-data-structure"
+      style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
+      <div class="chrome">
+        <div class="left">
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">wrong
+            data structure selection</span>
+        </div>
+        <div class="right">
+          <span>12 / 14</span>
+        </div>
+      </div>
+
+      <div class="frame"
+        style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2.4vh">
+        <div class="grid-2-6-6" style="gap:2vw; align-items:stretch">
+          <div
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2.2vh 1.5vw; display:flex; flex-direction:column; gap:1.4vh">
+            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:.8vw">
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.4vh .8vw; font-family:var(--mono); font-size:clamp(11px,.88vw,14px); color:#2a1e13; line-height:1.4"><code class="language-cpp"><span class="tok-type">array</span>&lt;<span class="tok-type">int</span>&gt; container;
+<span class="tok-type">void</span> <span class="tok-fn">producer</span>(<span class="tok-type">int</span> value){
+    container.<span class="tok-fn">push</span>(value);
+}
+
+<span class="tok-type">void</span> <span class="tok-fn">consumer</span>(){
+    <span class="tok-kw">for</span>(value of container){
+        <span class="tok-com">//some code</span>
+    }
+}</code></pre>
+              </div>
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.4vh .8vw; font-family:var(--mono); font-size:clamp(11px,.88vw,14px); color:#2a1e13; line-height:1.4"><code class="language-cpp"><span class="tok-type">set</span>&lt;<span class="tok-type">int</span>&gt; container;
+<span class="tok-type">void</span> <span class="tok-fn">producer</span>(<span class="tok-type">int</span> value){
+    container.<span class="tok-fn">push</span>(value);
+}
+
+<span class="tok-type">void</span> <span class="tok-fn">consumer</span>(){
+    <span class="tok-kw">for</span>(value of container){
+        <span class="tok-com">//some code</span>
+    }
+}</code></pre>
+              </div>
+              <div class="code-box-wrap">
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.4vh .8vw; font-family:var(--mono); font-size:clamp(11px,.88vw,14px); color:#2a1e13; line-height:1.4"><code class="language-cpp"><span class="tok-type">list</span>&lt;<span class="tok-type">int</span>&gt; container;
+<span class="tok-type">void</span> <span class="tok-fn">producer</span>(<span class="tok-type">int</span> value){
+    container.<span class="tok-fn">push</span>(value);
+}
+
+<span class="tok-type">void</span> <span class="tok-fn">consumer</span>(){
+    <span class="tok-kw">for</span>(value of container){
+        <span class="tok-com">//some code</span>
+    }
+}</code></pre>
+              </div>
+            </div>
+            <div
+              style="font-family:var(--mono); font-size:clamp(11.5px,0.9vw,14.5px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:0.8vh 1vw">
+              <strong>Question: Which has better performance? Why?</strong>
+            </div>
+          </div>
+
+          <div class="step" data-anim="step"
+            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:2.4vh 1.8vw; display:flex; flex-direction:column; justify-content:center; gap:1.6vh">
+            <div style="font-size:clamp(15px,1.15vw,20px); color:#2a1e13; font-weight:700; line-height:1.2">
+              Answer:
+            </div>
+            <div style="font-size:clamp(12.5px,0.92vw,15.5px); color:#493526; line-height:1.5">
+              The data is only pushed and iterated in a linear way and array push is O(1) and array is in a contiguous
+              memory which is more cache friendly. set is usually implemented by hash map or RB-Tree. Hash map has hash
+              value overhead and RB-Tree is O(logn). Moreover, hash map, RB-Tree and linked list are not memory
+              contiguous as array.
+            </div>
+            <div
+              style="font-size:clamp(12.5px,0.92vw,15.5px); color:#493526; line-height:1.5; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.4vh 1.2vw">
+              And most compilers doesn't have modeling and analysis of data structures. So if the data structures are
+              chosen wrong, the code remains slow.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div></div>
+        <div>12 / 14</div>
+      </div>
+    </section>
+
+    <!-- Slide 13: code with side effect -->
+    <section class="slide light" data-animate="pipeline" data-slide-id="compiler-limits-side-effects"
+      style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
+      <div class="chrome">
+        <div class="left">
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">code
+            with side effect</span>
+        </div>
+        <div class="right">
+          <span>13 / 14</span>
+        </div>
+      </div>
+
+      <div class="frame"
+        style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2.8vh">
+        <div class="grid-2-6-6" style="gap:2vw; align-items:stretch">
+          <div
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2.5vh 1.8vw; display:flex; flex-direction:column; gap:1.8vh">
+            <div class="code-box-wrap">
+              <pre
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:2vh 1.2vw; font-family:var(--mono); font-size:clamp(14px,1.15vw,19px); color:#2a1e13; line-height:1.65"><code class="language-cpp"><span class="tok-fn">log</span>(...)
+<span class="tok-com">//some code</span>
+<span class="tok-fn">log</span>(...)</code></pre>
+            </div>
+            <div
+              style="font-family:var(--mono); font-size:clamp(12px,0.92vw,15px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:1.2vh 1vw; line-height:1.6">
+              <strong>Question: Which kind of side effect does above code have?</strong><br>
+              <strong>Options:</strong><br>
+              A: value assignment to global variable<br>
+              B: system IO<br>
+              C: multi thread atomic variable access<br>
+              D: creation and exit of process/thread
+            </div>
+          </div>
+
+          <div class="step" data-anim="step"
+            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:2.5vh 1.8vw; display:flex; flex-direction:column; justify-content:center; gap:2vh">
+            <div style="font-size:clamp(15px,1.15vw,20px); color:#2a1e13; font-weight:700; line-height:1.2">
+              Answer:
+            </div>
+            <div style="font-size:clamp(14px,1.1vw,18px); color:#493526; line-height:1.6">
+              All options are often seen side effect in code.
+            </div>
+            <div
+              style="font-size:clamp(13.5px,1.05vw,17px); color:#493526; line-height:1.6; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.8vh 1.2vw">
+              On production, developers may be required to reduce log for better performance, this work can't be done by
+              compiler, because compiler won't optimize out IO side effect.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div></div>
+        <div>13 / 14</div>
+      </div>
+    </section>
+
+    <!-- Slide 14: closing -->
     <section class="slide hero light" data-slide-id="closing"
       style="--paper:#f1efea; --paper-rgb:241,239,234; --ink:#2a1e13; --ink-rgb:42,30,19; --paper-tint:#e8e2d8; --ink-tint:#3a2a1d">
       <div class="chrome">
         <div class="left">
-          <span>CORE PRINCIPLES</span>
-          <span class="sep"></span>
-          <span>TAKEAWAYS</span>
+          <span
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">Summary
+            & Takeaways</span>
         </div>
         <div class="right">
-          <span>03 / 03</span>
+          <span>14 / 14</span>
         </div>
       </div>
 
@@ -2623,7 +3467,8 @@ for(int i = 0; i &lt; 10000; ++i) {
           <div class="m" style="color:#9a5725">01</div>
           <div class="n" style="color:#2a1e13; font-size:4vw; line-height:1">CLARITY</div>
           <div class="l" style="color:#493526; font-size:clamp(16px,1.2vw,20px); line-height:1.6">
-            Clean code gives compilers explicit invariants and clearer data flows for aggressive optimization.
+            Write clear, intent-revealing code. Clean semantics let compilers analyze invariants and optimize
+            aggressively.
           </div>
         </div>
 
@@ -2632,23 +3477,25 @@ for(int i = 0; i &lt; 10000; ++i) {
           <div class="m" style="color:#9a5725">02</div>
           <div class="n" style="color:#2a1e13; font-size:4vw; line-height:1">TRUST</div>
           <div class="l" style="color:#493526; font-size:clamp(16px,1.2vw,20px); line-height:1.6">
-            Manual loop unrolling and bit tricks often break vectorization and pipeline scheduling.
+            Stop counterproductive micro-optimizations. Manual bit tricks, XOR swaps, and variable reuses harm
+            readability without performance gains.
           </div>
         </div>
 
         <div class="stat"
           style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; padding:4vh 2.5vw; border-radius:4px">
           <div class="m" style="color:#9a5725">03</div>
-          <div class="n" style="color:#9a5725; font-size:4vw; line-height:1">CONTRACT</div>
+          <div class="n" style="color:#9a5725; font-size:4vw; line-height:1">BOUNDARIES</div>
           <div class="l" style="color:#493526; font-size:clamp(16px,1.2vw,20px); line-height:1.6">
-            Understand inlining, alias analysis, and optimizer boundaries to write performant clean code.
+            Compilers optimize tactical details; engineers own architecture. Focus on data structures, algorithmic
+            complexity, and IO side effects.
           </div>
         </div>
       </div>
 
       <div class="foot">
         <div class="title">END OF DECK</div>
-        <div>03 / 03</div>
+        <div>14 / 14</div>
       </div>
     </section>
 
@@ -2660,24 +3507,202 @@ for(int i = 0; i &lt; 10000; ++i) {
   <script>
     const SPEAKER_NOTES = [
       {
-        id: 'cover', title: 'Write Clean, Compile Smart', section: 'Intro', minutes: 1.0,
-        purpose: 'Establish theme: balancing clean code with performance using modern compilers',
-        talk: ['Acknowledge the habit of manual micro-optimization', 'Highlight the deep analysis capabilities of modern compiler pipelines', 'Emphasize: cleaner code gives the optimizer wider scope for improvement'],
-        transition: 'Move to the concrete case study', cue: 'Check background rendering'
+        "id": "cover",
+        "title": "Write Clean, Compile Smart",
+        "section": "Intro",
+        "minutes": 2,
+        "purpose": "Introduce the core thesis: write clean, expressive code and let modern compilers handle micro-optimizations",
+        "talk": [
+          "Welcome everyone to this session on compilers for application engineers.",
+          "Common wisdom says compilers are all about chasing micro-performance, but in real application engineering, clarity and peace of mind matter more.",
+          "Today we debunk widespread interview myths and show why clean code compiles smarter."
+        ],
+        "transition": "Begin with our first case study: empty loop benchmarking pitfalls",
+        "cue": "Pause for audience attention and advance"
       },
       {
-        id: 'increment-optimization', title: 'i++ vs ++i Optimization', section: 'Case Study', minutes: 1.5,
-        purpose: 'Show how dead code elimination and SSA form nullify trivial micro-optimizations',
-        talk: ['Present the classic interview question on loop increments', 'Trigger step advance to reveal the compiler analysis', 'Explain that unused value assignments are stripped completely in SSA / dead-code passes'],
-        transition: 'Move to core engineering principles', cue: 'Advance step before revealing the answer'
+        "id": "bench-for-loop",
+        "title": "Measure Performance in a For Loop",
+        "section": "Micro-benchmarks",
+        "minutes": 3.5,
+        "purpose": "Expose how empty loop benchmarks deceive developers because dead code elimination removes them entirely",
+        "talk": [
+          "Ask the room: who has ever written an empty for-loop to benchmark CPU speed?",
+          "Modern compilers recognize that the loop body has no observable side effects.",
+          "Both loops are optimized away completely, meaning the recorded time delta is pure OS noise and clock jitter."
+        ],
+        "transition": "Move to the classic increment interview question",
+        "cue": "Poll the audience on option 1 vs option 2"
       },
       {
-        id: 'closing', title: 'Core Principles', section: 'Summary', minutes: 1.2,
-        purpose: 'Summarize key engineering takeaways',
-        talk: ['Focus on clarity: state semantics plainly', 'Avoid counterproductive manual tricks', 'Rely on compiler contracts and IR inspection'],
-        transition: 'Open for questions', cue: 'Pause 2 seconds and conclude'
+        "id": "increment-optimization",
+        "title": "i++ and ++i",
+        "section": "Debunking Myths",
+        "minutes": 3.5,
+        "purpose": "Dispel the myth that prefix increment is faster than postfix increment in loops when unused",
+        "talk": [
+          "The classic interview question asks whether ++i is faster than i++ in a standard loop.",
+          "The conceptual temporary value created by i++ is an unused assignment.",
+          "Modern optimizers eliminate unused value assignments, making the emitted instructions strictly identical."
+        ],
+        "transition": "Examine another famous interview trick: variable swapping",
+        "cue": "Highlight the struck-through temporary variable"
+      },
+      {
+        "id": "swap-variables",
+        "title": "Swap Two Variables",
+        "section": "Debunking Myths",
+        "minutes": 3.5,
+        "purpose": "Explain why XOR swap tricks hurt modern superscalar CPU execution compared to standard temp swaps",
+        "talk": [
+          "Many interviewees are taught to use XOR bitwise swaps to avoid a temporary variable.",
+          "In reality, compilers and CPU register renaming make normal temp swaps virtually costless.",
+          "XOR creates strict data dependency chains that stall the arithmetic pipeline."
+        ],
+        "transition": "Check how developers write array iteration conditions",
+        "cue": "Emphasize that readability wins on modern hardware"
+      },
+      {
+        "id": "array-iteration",
+        "title": "How to Iterate Over an Array",
+        "section": "Loop Optimization",
+        "minutes": 3.5,
+        "purpose": "Demonstrate loop invariant code motion and inlining on array size queries",
+        "talk": [
+          "Developers often manually hoist array.size() out of the loop condition to avoid repeated calls.",
+          "When the container size is invariant, the compiler hoists invariant reads automatically.",
+          "Even if an intermediate size variable is declared, liveness analysis ensures register storage is reused."
+        ],
+        "transition": "Discuss the misconception of reusing variables to save memory",
+        "cue": "Show both code samples before revealing the compiler explanation"
+      },
+      {
+        "id": "variable-reuse",
+        "title": "Variable Reuse",
+        "section": "Memory Misconceptions",
+        "minutes": 3.5,
+        "purpose": "Clarify that compilers reuse memory storage through liveness analysis without manual variable re-use",
+        "talk": [
+          "Some developers compress multiple distinct values into a single generic variable name to save stack memory.",
+          "Compilers perform rigorous liveness analysis and map non-overlapping variables to the same physical registers.",
+          "Reusing variables destroys readability without saving a single byte of memory."
+        ],
+        "transition": "Contrast named constants with magic numbers",
+        "cue": "Remind engineers never to sacrifice business clarity"
+      },
+      {
+        "id": "named-constants",
+        "title": "Named Constants vs Magic Numbers",
+        "section": "Constant Folding",
+        "minutes": 3.5,
+        "purpose": "Prove that named constants carry zero runtime penalty thanks to constant propagation",
+        "talk": [
+          "Compare explicit time conversion constants against a hardcoded magic number like 86400000.",
+          "The compiler folds constant products into a single number ahead of time.",
+          "Constant propagation works regardless of whether explicit const keywords are declared."
+        ],
+        "transition": "Investigate the classic division versus bit-shift debate",
+        "cue": "Encourage engineers to write expressive arithmetic"
+      },
+      {
+        "id": "strength-reduction",
+        "title": "x/2 vs x>>1",
+        "section": "Strength Reduction",
+        "minutes": 3.5,
+        "purpose": "Showcase compiler strength reduction from division to shift while preserving intent and sign correctness",
+        "talk": [
+          "A common micro-optimization habit is replacing integer division by two with a right shift.",
+          "Compilers automatically apply strength reduction where valid, allowing developers to write readable division.",
+          "Beware: division and right-shift handle negative integers differently, making manual shifts prone to subtle bugs."
+        ],
+        "transition": "Try to benchmark division and shift in a loop to see what happens",
+        "cue": "Warn about semantic differences on negative numbers"
+      },
+      {
+        "id": "bench-strength-reduction",
+        "title": "How to Bench x/2 and x>>1",
+        "section": "Benchmarking Traps",
+        "minutes": 3.5,
+        "purpose": "Expose the second benchmark pitfall: unused calculation results inside loops",
+        "talk": [
+          "When developers try to measure division vs shift by running ten million iterations, both loops take 0 milliseconds.",
+          "The assigned variable x is never observed downstream, so the loop body is deleted as dead code.",
+          "Multiple compiler optimization passes work in succession to eliminate all redundant computation."
+        ],
+        "transition": "See what happens when we try to sum up the values",
+        "cue": "Ask why the timing output is identical and tiny"
+      },
+      {
+        "id": "bench-strength-reduction-further",
+        "title": "How to Bench x/2 and x>>1 Further",
+        "section": "Benchmarking Traps",
+        "minutes": 3.5,
+        "purpose": "Demonstrate loop induction and constant folding eliminating entire sum loops",
+        "talk": [
+          "To force the compiler to run the loop, developers accumulate the result into sum and print it.",
+          "However, induction variable analysis and closed-form algebra allow the compiler to fold the whole sum into 2450.",
+          "The loop is replaced by printing a static constant at compile time."
+        ],
+        "transition": "Turn to the second part: what the compiler cannot do for you",
+        "cue": "Reveal the precomputed constant 2450"
+      },
+      {
+        "id": "compiler-limits-runtime",
+        "title": "Code Relying on Runtime Information",
+        "section": "Compiler Boundaries",
+        "minutes": 3.5,
+        "purpose": "Clarify that runtime nondeterminism cannot be eliminated by static compiler analysis",
+        "talk": [
+          "Now we look at what compilers cannot do. When values come from runtime functions like random(), values are unknown.",
+          "Without static context, the compiler cannot precompute or eliminate the loop iterations.",
+          "Application engineers must recognize the line where static analysis ends and runtime computation begins."
+        ],
+        "transition": "Examine architectural choices: container selection",
+        "cue": "Highlight the random() call as an opaque runtime barrier"
+      },
+      {
+        "id": "compiler-limits-data-structure",
+        "title": "Wrong Data Structure Selection",
+        "section": "Compiler Boundaries",
+        "minutes": 3.5,
+        "purpose": "Explain that compilers do not rewrite algorithmic data structures or repair cache-unfriendly collections",
+        "talk": [
+          "For a producer-consumer sequence that only appends and iterates sequentially, array is far superior.",
+          "Sets introduce hash or tree overhead, and node-based lists fragment CPU memory cache lines.",
+          "Compilers do not understand high-level data structure semantics: choosing the wrong collection stays slow forever."
+        ],
+        "transition": "Address observable runtime side effects such as logging and IO",
+        "cue": "Reiterate that algorithmic complexity O(1) vs O(log n) is the developer responsibility"
+      },
+      {
+        "id": "compiler-limits-side-effects",
+        "title": "Code with Side Effects",
+        "section": "Compiler Boundaries",
+        "minutes": 3.5,
+        "purpose": "Highlight that observable side effects and system IO cannot be pruned by the compiler",
+        "talk": [
+          "Question: which side effect is present in logging calls? The answer is system IO, among other side effects.",
+          "Compilers are strictly forbidden by language standards from discarding observable IO operations.",
+          "Reducing excessive logging in production is an engineering discipline that no compiler pass can solve."
+        ],
+        "transition": "Conclude with core principles and audience takeaways",
+        "cue": "Review the four options before emphasizing IO impact"
+      },
+      {
+        "id": "closing",
+        "title": "Core Principles",
+        "section": "Summary",
+        "minutes": 3.5,
+        "purpose": "Summarize the overarching principles: write clean code, trust compiler optimizations, and own architecture",
+        "talk": [
+          "Clarity: write code for human readers. Clear logic gives compilers the invariants needed for optimization.",
+          "Trust: leave register allocation, inlining, and strength reduction to the toolchain.",
+          "Boundaries: focus your engineering energy on data structures, algorithmic complexity, and system IO."
+        ],
+        "transition": "Open the floor for questions and free discussion",
+        "cue": "Invite audience questions and discuss real-world codebase examples"
       }
-    ];
+    ]];
     window.__SPEAKER_NOTES__ = SPEAKER_NOTES;
   </script>
 

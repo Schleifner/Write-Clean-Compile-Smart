@@ -20,8 +20,8 @@ int main(){
 }
 ```
 Question: Which one is correct
-1. I did similar bench in the past
-2. No, I didn't
+A: I did similar bench in the past
+B: No, I didn't
 Answer:
 compile can optimize out empty blocks including empty if/for/while etc.So the code become
 ```c++
@@ -101,6 +101,23 @@ Answer:
 Compiler has loop invariant code motion. The array.size() function will be called multi times during the loop when the array size is unchanged in the loop. Moreover, compiler also inline small function calls, so the `.size()` function call will not exist. Instead, it will be optimized to `array._size` attribute read.
 `int size = array.size();` is also not a performance problem, because compiler has variable liveness analysis. The storage allocated for `int size` can be reused by other variables after the for loop.
 
+## named constants vs magic number
+```c
+int hoursInDay = 24;
+int minutesInHour = 60;
+int secondsInMinute = 60;
+int millisecondsInSecond = 1000;
+
+int millisecondsInDay = hoursInDay * minutesInHour * secondsInMinute * millisecondsInSecond;
+```
+
+```c
+int millisecondsInDay = 86400000;
+```
+Question: Which version is easier to understand? Does the first version do more work at runtime?
+
+Answer: The named constants make the units and intent clear. The compiler has const propagation to calculate the product ahead of time, so the first version does not need to perform those multiplications at runtime. Prefer the readable version over the magic number. One more note, some programming language can declare variable as const, but compiler const propagation doesn't rely on the const qualifier.
+
 ## variable reuse
 ```c
 int milage = getMilage();
@@ -123,23 +140,6 @@ Similarly, there is no need to remove meaningful intermediate variable.
 int priceAfterDiscount = price - discount;
 int finalPrice = priceAfterDiscount + shipping;
 ```
-
-## named constants vs magic number
-```c
-int hoursInDay = 24;
-int minutesInHour = 60;
-int secondsInMinute = 60;
-int millisecondsInSecond = 1000;
-
-int millisecondsInDay = hoursInDay * minutesInHour * secondsInMinute * millisecondsInSecond;
-```
-
-```c
-int millisecondsInDay = 86400000;
-```
-Question: Which version is easier to understand? Does the first version do more work at runtime?
-
-Answer: The named constants make the units and intent clear. The compiler has const propagation to calculate the product ahead of time, so the first version does not need to perform those multiplications at runtime. Prefer the readable version over the magic number. One more note, some programming language can declare variable as const, but compiler const propagation doesn't rely on the const qualifier。
 
 ## x/2 vs x>>1
 ```c
