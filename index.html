@@ -12,7 +12,7 @@
     rel="stylesheet">
   <style>
     :root {
-      /* ============ 主题色(科技深色: 🌊 靛蓝瓷 / 钛金科技暗底) ============ */
+      /* ============ Theme colors ============ */
       --ink: #060d17;
       --ink-rgb: 6, 13, 23;
       --paper: #f4f7fa;
@@ -20,7 +20,7 @@
       --paper-tint: #e4ebf2;
       --ink-tint: #0f1b2b;
 
-      /* ============ 字体(跨主题固定) ============ */
+      /* ============ Shared typography ============ */
       --mono: "IBM Plex Mono", ui-monospace, monospace;
       --serif-en: "Playfair Display", "Source Serif 4", Georgia, serif;
       --serif-body-en: "Source Serif 4", Georgia, serif;
@@ -46,7 +46,7 @@
       text-rendering: optimizeLegibility
     }
 
-    /* ============ WebGL 双背景 ============ */
+    /* ============ WebGL backgrounds ============ */
     canvas.bg {
       position: fixed;
       inset: 0;
@@ -77,8 +77,8 @@
       display: none !important
     }
 
-    /* ============ Deck 容器 + 翻页 ============ */
-    /* width: NSLIDES * 100vw，会在 JS 里动态矫正 */
+    /* ============ Deck container and navigation ============ */
+    /* Width is corrected in JavaScript to NSLIDES * 100vw. */
     #deck {
       position: fixed;
       inset: 0;
@@ -112,7 +112,7 @@
       background: var(--ink)
     }
 
-    /* 默认页：遮罩较厚，保证文字可读 */
+    /* Standard slides use a stronger overlay for legibility. */
     .slide::before {
       content: "";
       position: absolute;
@@ -132,7 +132,7 @@
       backdrop-filter: blur(3px)
     }
 
-    /* Hero 页：遮罩大幅降低，让 WebGL 背景明显透出 */
+    /* Hero slides use a lighter overlay to reveal the WebGL background. */
     .slide.hero.light::before {
       background: rgba(var(--paper-rgb), .16);
       backdrop-filter: none
@@ -143,7 +143,7 @@
       backdrop-filter: none
     }
 
-    /* Hero 页顶底微弱渐隐，保证 chrome/foot 区域可读 */
+    /* Subtle hero gradients keep the chrome and footer legible. */
     .slide.hero::after {
       content: "";
       position: absolute;
@@ -160,8 +160,8 @@
       background: linear-gradient(180deg, rgba(var(--ink-rgb), .32) 0%, rgba(var(--ink-rgb), 0) 14%, rgba(var(--ink-rgb), 0) 86%, rgba(var(--ink-rgb), .32) 100%)
     }
 
-    /* ============ Magazine chrome：顶部 meta + 底部 foot ============
-     （v1 布局 + v2 字号在此合并为唯一定义，不要在别处二次定义） */
+    /* ============ Magazine chrome: header metadata and footer ============
+       Layout and typography are defined here; do not redefine elsewhere. */
     .chrome {
       display: flex;
       justify-content: space-between;
@@ -233,10 +233,10 @@
       margin: 0
     }
 
-    /* ============ 字体规则 ============
-     · 衬线（Noto Serif SC / Playfair）：大标题、重点金句、数字
-     · 非衬线（Noto Sans SC）：正文描述、body、补充说明
-     · 等宽（IBM Plex Mono）：kicker、meta 小标签、foot 右侧
+    /* ============ Typography ============
+     - Serif (Noto Serif SC / Playfair): display headings, quotes, and numbers
+     - Sans serif (Noto Sans SC): body copy and supporting text
+     - Monospace (IBM Plex Mono): kickers, metadata, and footer labels
   */
     .kicker {
       font-family: var(--mono);
@@ -359,7 +359,7 @@
       font-weight: 500
     }
 
-    /* ============ 布局工具 ============ */
+    /* ============ Layout utilities ============ */
     .col {
       display: flex;
       flex-direction: column;
@@ -456,7 +456,7 @@
       text-align: right
     }
 
-    /* ============ Stat（数字矩阵） ============ */
+    /* ============ Stats (numeric matrix) ============ */
     .stat {
       display: flex;
       flex-direction: column;
@@ -491,7 +491,7 @@
       margin-bottom: .2vh
     }
 
-    /* ============ Callout（引用框） ============ */
+    /* ============ Callouts ============ */
     .callout {
       padding: 3vh 2.4vw;
       border-left: 3px solid currentColor;
@@ -527,7 +527,7 @@
       line-height: 1.42
     }
 
-    /* ============ Platform（平台卡） ============ */
+    /* ============ Platform cards ============ */
     .plat {
       display: flex;
       flex-direction: column;
@@ -571,7 +571,7 @@
       line-height: 1
     }
 
-    /* ============ Rowline（表格行） ============ */
+    /* ============ Table rows ============ */
     .rowline {
       display: grid;
       grid-template-columns: 1fr 2fr 1fr;
@@ -610,7 +610,7 @@
       justify-self: end
     }
 
-    /* ============ Pillar（支柱卡片） ============ */
+    /* ============ Pillar cards ============ */
     .pillar {
       display: flex;
       flex-direction: column;
@@ -730,7 +730,7 @@
       opacity: .7
     }
 
-    /* ============ 图片占位（虚线框，提示设计师位置） ============ */
+    /* ============ Image placeholders ============ */
     .img-slot {
       border: 1.5px dashed rgba(127, 127, 127, .4);
       display: flex;
@@ -785,9 +785,9 @@
       aspect-ratio: 1/1
     }
 
-    /* ============ 图片实填框（关键：固定高度 + 只裁底部） ============
-     重要约束：高度用内联 height:Nvh 精确控制，不要用 aspect-ratio（会撑破布局）
-     object-position:top center 保证严禁裁剪顶部和左右，只裁剪底部
+    /* ============ Image frames: fixed height, crop only from the bottom ============
+     Set height inline in vh; avoid aspect-ratio because it can break the layout.
+     Keep the top and sides visible with object-position: top center.
   */
     .frame-img {
       overflow: hidden;
@@ -913,7 +913,7 @@
       flex: 0 0 auto
     }
 
-    /* ============ 导航 ============ */
+    /* ============ Navigation ============ */
     #nav {
       position: fixed;
       left: 3vw;
@@ -1022,7 +1022,7 @@
       color: var(--ink)
     }
 
-    /* ============ 演讲者模式 ============ */
+    /* ============ Presenter mode ============ */
     body.ppt-audience #hint,
     body.ppt-audience #nav,
     body.ppt-preview #hint,
@@ -2089,15 +2089,15 @@
       }
     }
 
-    /* ============ /演讲者模式 ============ */
+    /* ============ End presenter mode ============ */
 
     /* ============================================================
-     ============ LAYOUTS API · 面向 agent 的类（v2）============
-     所有 layouts.md 中的骨架都基于下面这套命名。
-     如果你在 layouts.md 里看到某个类，它必须在下面有定义。
+     LAYOUTS API: reusable layout classes (v2)
+     Layout patterns in layouts.md use these class names.
+     Every class referenced there must be defined below.
      ============================================================ */
 
-    /* ---------- .frame：每页主内容容器 ---------- */
+    /* ---------- .frame: main content container for each slide ---------- */
     .frame {
       flex: 1;
       display: flex;
@@ -2106,7 +2106,7 @@
       overflow: hidden
     }
 
-    /* 当 .frame 同时加了 grid 类时，grid 的 display:grid 覆盖 flex */
+    /* Grid variants override the flex display on .frame. */
     .frame.grid-2-7-5,
     .frame.grid-2-6-6,
     .frame.grid-2-8-4,
@@ -2115,7 +2115,7 @@
       display: grid
     }
 
-    /* ---------- 标题层级（API 名称，衬线为主） ---------- */
+    /* ---------- Heading hierarchy: primarily serif ---------- */
     .h-hero {
       font-family: var(--serif-zh);
       font-weight: 900;
@@ -2148,16 +2148,16 @@
       line-height: 1.3;
     }
 
-    /* 英文标题专用（Playfair 衬线） */
+    /* English headings use the Playfair serif. */
     .h-hero-en,
     .h-xl-en {
       font-family: var(--serif-en);
       letter-spacing: -.025em
     }
 
-    /* ---------- lead 引语：定义见上方“字体规则”区块（已合并，勿重复定义） ---------- */
+    /* ---------- Lead quote: defined in the typography section above. ---------- */
 
-    /* ---------- meta-row 底部元数据 ---------- */
+    /* ---------- Footer metadata ---------- */
     .meta-row {
       display: flex;
       gap: 1.2em;
@@ -2170,7 +2170,7 @@
       opacity: .6;
     }
 
-    /* ---------- stat-card（数据大字报用） ---------- */
+    /* ---------- Stat cards ---------- */
     .stat-card {
       display: flex;
       flex-direction: column;
@@ -2217,17 +2217,17 @@
       margin-top: .6vh;
     }
 
-    /* 当 stat-card 用于 grid-4（2x2），数字适度放大；若页面有标题+引文在上方，可内联 style 覆盖为更小值 */
+    /* Enlarge stats in 2x2 grids; inline styles can override this when needed. */
     .grid-4 .stat-card .stat-nb {
       font-size: 5vw
     }
 
-    /* 当只有 3 个，字也可以稍大 */
+    /* Slightly larger type works well when there are only three stats. */
     .grid-3 .stat-card .stat-nb {
       font-size: 6.8vw
     }
 
-    /* ---------- pipeline（流水线） ---------- */
+    /* ---------- Step pipeline ---------- */
     .pipeline-section {
       margin-top: 4.4vh;
       padding-top: 2.8vh;
@@ -2300,8 +2300,8 @@
       opacity: .72;
     }
 
-    /* ---------- 网格（layouts.md 所用） ---------- */
-    /* 这些类独立挂到任何容器上都能生效，不依赖 .frame 复合选择器 */
+    /* ---------- Grid layouts used by layouts.md ---------- */
+    /* These classes work on any container and do not depend on .frame. */
     .grid-2-7-5 {
       display: grid;
       grid-template-columns: 7fr 5fr;
@@ -2330,10 +2330,10 @@
       gap: 2.4vh 2vw;
     }
 
-    /* grid-6 已在旧样式里定义为 3x2，这里仅补 align */
+    /* grid-6 is already defined as 3x2; alignment is set in the earlier rule. */
 
-    /* ---------- 图片 frame-img（layouts.md 主命名） ---------- */
-    /* 在旧样式里已定义，这里补 img-cap 命名别名与增强 */
+    /* ---------- Image frame-img classes used by layouts.md ---------- */
+    /* Add the img-cap alias and enhancements to the existing styles. */
     figure.frame-img {
       margin: 0;
       display: flex;
@@ -2341,8 +2341,8 @@
       min-width: 0
     }
 
-    /* 有图注时:图片弹性收缩,图注收进固定高度/比例框内部,
-     否则 img 的 height:100% 会把 figcaption 挤出 overflow:hidden 裁掉 */
+    /* With a caption, let the image shrink so the caption stays inside the frame;
+       otherwise height: 100% can push the figcaption outside the clipped area. */
     figure.frame-img:has(> .img-cap)>img {
       flex: 1 1 auto;
       min-height: 0;
@@ -2360,7 +2360,7 @@
       opacity: .6;
     }
 
-    /* callout src 命名别名 */
+    /* Callout source alias. */
     .callout-src {
       display: block;
       margin-top: 1.6vh;
@@ -2371,16 +2371,16 @@
       opacity: .6;
     }
 
-    /* ---------- chrome & foot：定义见上方“Magazine chrome”区块（已合并，勿重复定义） ---------- */
+    /* ---------- Chrome and footer are defined in the Magazine chrome section above. ---------- */
 
-    /* ============ 动效系统(Motion One 驱动) ============
-     所有 [data-anim] 元素默认隐藏,进入页面时由 JS 逐个揭示。
-     - cascade(默认):按 DOM 顺序 stagger 120ms 淡入 + y:16→0
-     - hero(hero 页自动):慢一点的 stagger 180ms
-     - quote(含 [data-anim="line"]):逐行 600ms 淡入
-     - directional(含 [data-anim="left|right"]):左→分隔线→右
-     - pipeline(data-animate="pipeline"):Space/→ 手动推进
-     Motion One 没加载成功时(CDN 断 + 本地丢),所有 [data-anim] 会兜底显示。
+    /* ============ Motion One animation system ============
+     [data-anim] elements are revealed as slides enter.
+     - cascade (default): staggered fade-in in DOM order
+     - hero: slower stagger for hero slides
+     - quote: reveal [data-anim="line"] elements one line at a time
+     - directional: reveal left panel, divider, then right panel
+     - pipeline: advance manually with Space or the right arrow
+     If Motion One fails to load, all [data-anim] elements remain visible.
   */
     [data-anim] {
       opacity: 1
@@ -2424,13 +2424,13 @@
       transform: none !important
     }
 
-    /* ESC 索引缩略图：克隆的 slide 不经过动效播放，强制显示所有待动画元素 */
+    /* Show animated elements in cloned slides used by the Escape overview. */
     #overview [data-anim] {
       opacity: 1 !important;
       transform: none !important
     }
 
-    /* ---------- 响应式降级 ---------- */
+    /* ---------- Responsive fallback ---------- */
     @media (max-width:900px) {
       .display {
         font-size: 16vw
@@ -2541,9 +2541,9 @@
   <div id="deck">
 
     <!-- ============================================================
-     SLIDES 插入区 · 在此处填充所有 <section class="slide ..."> 页面
-     每页模板参考 references/page-patterns.md
-     页面组件参考 references/components.md
+     Slide insertion area: add each <section class="slide ..."> here.
+     See references/page-patterns.md for slide templates.
+     See references/components.md for reusable components.
      ============================================================ -->
 
     <!-- SLIDES_HERE -->
@@ -2885,21 +2885,21 @@ a = a ^ b;</code></pre>
 
       <div class="frame"
         style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2.8vh">
-        <div class="grid-2-6-6" style="gap:2vw; align-items:stretch">
+        <div class="grid-2-6-6"
+          style="grid-template-columns:minmax(0, 1.15fr) minmax(0, 1fr); gap:2vw; align-items:stretch">
           <div
-            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2.4vh 1.8vw; display:flex; flex-direction:column; gap:1.4vh">
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2.4vh 1.6vw; display:flex; flex-direction:column; gap:1.4vh">
             <div class="code-box-wrap">
               <pre
-                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.4vh 1.2vw; font-family:var(--mono); font-size:clamp(12px,0.98vw,15.5px); color:#2a1e13; line-height:1.45"><code class="language-cpp"><span class="tok-type">int</span> hoursInDay = <span class="tok-num">24</span>;
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.4vh 1.2vw; font-family:var(--mono); font-size:clamp(10.5px,0.85vw,14px); color:#2a1e13; line-height:1.45"><code class="language-cpp"><span class="tok-type">int</span> hoursInDay = <span class="tok-num">24</span>;
 <span class="tok-type">int</span> minutesInHour = <span class="tok-num">60</span>;
 <span class="tok-type">int</span> secondsInMinute = <span class="tok-num">60</span>;
-<span class="tok-type">int</span> millisecondsInSecond = <span class="tok-num">1000</span>;
 
-<span class="tok-type">int</span> millisecondsInDay = hoursInDay * minutesInHour * secondsInMinute * millisecondsInSecond;</code></pre>
+<span class="tok-type">int</span> secondsInDay = hoursInDay * minutesInHour * secondsInMinute;</code></pre>
             </div>
             <div class="code-box-wrap">
               <pre
-                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.2vh 1.2vw; font-family:var(--mono); font-size:clamp(12px,1vw,16px); color:#2a1e13; line-height:1.45"><code class="language-cpp"><span class="tok-type">int</span> millisecondsInDay = <span class="tok-num">86400000</span>;</code></pre>
+                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.2vh 1.2vw; font-family:var(--mono); font-size:clamp(11px,0.9vw,14.5px); color:#2a1e13; line-height:1.45"><code class="language-cpp"><span class="tok-type">int</span> secondsInDay = <span class="tok-num">86400</span>;</code></pre>
             </div>
             <div
               style="font-family:var(--mono); font-size:clamp(11.5px,0.9vw,14.5px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:0.8vh 1vw">
@@ -3403,37 +3403,69 @@ val = <span class="tok-fn">getVelocity</span>();
       </div>
 
       <div class="frame"
-        style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2.8vh">
+        style="display:flex; flex-direction:column; justify-content:center; min-height:74vh; gap:2.4vh">
         <div class="grid-2-6-6" style="gap:2vw; align-items:stretch">
           <div
-            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2.5vh 1.8vw; display:flex; flex-direction:column; gap:1.8vh">
-            <div class="code-box-wrap">
-              <pre
-                style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:2vh 1.2vw; font-family:var(--mono); font-size:clamp(14px,1.15vw,19px); color:#2a1e13; line-height:1.65"><code class="language-cpp"><span class="tok-fn">log</span>(...)
-<span class="tok-com">//some code</span>
-<span class="tok-fn">log</span>(...)</code></pre>
+            style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; border-radius:4px; padding:2.2vh 1.4vw; display:flex; flex-direction:column; gap:1.2vh">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.7vw">
+              <div class="code-box-wrap">
+                <div
+                  style="font-family:var(--mono); font-size:clamp(10px,0.78vw,12px); color:#9a5725; font-weight:700; margin-bottom:0.4vh">
+                  1</div>
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.2vh 0.8vw; font-family:var(--mono); font-size:clamp(11.5px,0.9vw,14.5px); color:#2a1e13; line-height:1.4"><code class="language-cpp"><span class="tok-fn">log</span>(...)</code></pre>
+              </div>
+              <div class="code-box-wrap">
+                <div
+                  style="font-family:var(--mono); font-size:clamp(10px,0.78vw,12px); color:#9a5725; font-weight:700; margin-bottom:0.4vh">
+                  2</div>
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.2vh 0.8vw; font-family:var(--mono); font-size:clamp(11.5px,0.9vw,14.5px); color:#2a1e13; line-height:1.4"><code class="language-cpp"><span class="tok-type">int</span> x;
+<span class="tok-type">void</span> <span class="tok-fn">foo</span>(){
+    x = <span class="tok-num">10</span>;
+}</code></pre>
+              </div>
+              <div class="code-box-wrap">
+                <div
+                  style="font-family:var(--mono); font-size:clamp(10px,0.78vw,12px); color:#9a5725; font-weight:700; margin-bottom:0.4vh">
+                  3</div>
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.2vh 0.8vw; font-family:var(--mono); font-size:clamp(11.5px,0.9vw,14.5px); color:#2a1e13; line-height:1.4"><code class="language-cpp"><span class="tok-type">void</span> <span class="tok-fn">foo</span>(<span class="tok-type">int</span>* p){
+    *p = <span class="tok-num">5</span>;
+}</code></pre>
+              </div>
+              <div class="code-box-wrap">
+                <div
+                  style="font-family:var(--mono); font-size:clamp(10px,0.78vw,12px); color:#9a5725; font-weight:700; margin-bottom:0.4vh">
+                  4</div>
+                <pre
+                  style="margin:0; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.2vh 0.8vw; font-family:var(--mono); font-size:clamp(11.5px,0.9vw,14.5px); color:#2a1e13; line-height:1.4"><code class="language-cpp"><span class="tok-type">void</span> <span class="tok-fn">foo</span>(){
+    <span class="tok-type">atomic</span>&lt;<span class="tok-type">int</span>&gt; x;
+    x = <span class="tok-num">7</span>;
+}</code></pre>
+              </div>
             </div>
             <div
-              style="font-family:var(--mono); font-size:clamp(12px,0.92vw,15px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:1.2vh 1vw; line-height:1.6">
-              <strong>Question: Which kind of side effect does above code have?</strong><br>
+              style="font-family:var(--mono); font-size:clamp(11px,0.85vw,13.5px); color:#2a1e13; background:#faf6ef; border:1px solid #e5dcce; border-radius:4px; padding:1vh 0.9vw; line-height:1.5">
+              <strong>Question: Map following side effect to above code:</strong><br>
               <strong>Options:</strong><br>
               A: value assignment to global variable<br>
               B: system IO<br>
               C: multi thread atomic variable access<br>
-              D: creation and exit of process/thread
+              D: memory alias analysis is a hard challenge for compiler
             </div>
           </div>
 
           <div class="step" data-anim="step"
-            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:2.5vh 1.8vw; display:flex; flex-direction:column; justify-content:center; gap:2vh">
+            style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; border-radius:4px; padding:2.4vh 1.8vw; display:flex; flex-direction:column; justify-content:center; gap:1.8vh">
             <div style="font-size:clamp(15px,1.15vw,20px); color:#2a1e13; font-weight:700; line-height:1.2">
               Answer:
             </div>
-            <div style="font-size:clamp(14px,1.1vw,18px); color:#493526; line-height:1.6">
+            <div style="font-size:clamp(13.5px,1.05vw,17px); color:#493526; line-height:1.6">
               All options are often seen side effect in code.
             </div>
             <div
-              style="font-size:clamp(13.5px,1.05vw,17px); color:#493526; line-height:1.6; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.8vh 1.2vw">
+              style="font-size:clamp(13px,1vw,16.5px); color:#493526; line-height:1.6; background:#f3eee6; border:1px solid #e2d8ca; border-radius:4px; padding:1.6vh 1.2vw">
               On production, developers may be required to reduce log for better performance, this work can't be done by
               compiler, because compiler won't optimize out IO side effect.
             </div>
@@ -3597,7 +3629,7 @@ val = <span class="tok-fn">getVelocity</span>();
         "minutes": 3.5,
         "purpose": "Prove that named constants carry zero runtime penalty thanks to constant propagation",
         "talk": [
-          "Compare explicit time conversion constants against a hardcoded magic number like 86400000.",
+          "Compare explicit time conversion constants against a hardcoded magic number like 86400.",
           "The compiler folds constant products into a single number ahead of time.",
           "Constant propagation works regardless of whether explicit const keywords are declared."
         ],
@@ -3679,14 +3711,14 @@ val = <span class="tok-fn">getVelocity</span>();
         "title": "Code with Side Effects",
         "section": "Compiler Boundaries",
         "minutes": 3.5,
-        "purpose": "Highlight that observable side effects and system IO cannot be pruned by the compiler",
+        "purpose": "Showcase how observable side effects restrict compiler optimizations",
         "talk": [
-          "Question: which side effect is present in logging calls? The answer is system IO, among other side effects.",
-          "Compilers are strictly forbidden by language standards from discarding observable IO operations.",
-          "Reducing excessive logging in production is an engineering discipline that no compiler pass can solve."
+          "Walk through the 4 code patterns: system logging I/O, global state modification, pointer aliasing, and atomic memory operations.",
+          "Ask the audience: map the following side effects to the code examples above. Reveal the mappings and explain why each introduces a side effect.",
+          "Under the C++ as-if rule, compilers cannot eliminate or reorder operations that modify observable program or system state."
         ],
         "transition": "Conclude with core principles and audience takeaways",
-        "cue": "Review the four options before emphasizing IO impact"
+        "cue": "Pause for the audience answer before advancing to reveal the answer card"
       },
       {
         "id": "closing",
@@ -3702,16 +3734,16 @@ val = <span class="tok-fn">getVelocity</span>();
         "transition": "Open the floor for questions and free discussion",
         "cue": "Invite audience questions and discuss real-world codebase examples"
       }
-    ]];
+    ];
     window.__SPEAKER_NOTES__ = SPEAKER_NOTES;
   </script>
 
   <script>
-    /* =============== WebGL 双背景 ===============
-       深色页：Holographic Dispersion（全息色散 · 钛金暗流）—— 彩虹微扰、鼠标径向涟漪
-       浅色页：Spiral Vortex（旋转涡流 · 银色珍珠）—— domain-warp 流动、无中心
-       修改风格请参考 references/webgl-backgrounds.md
-    */
+    /* =============== WebGL backgrounds ===============
+      Dark slides: Holographic Dispersion with subtle color variation and cursor ripples.
+      Light slides: Spiral Vortex with flowing domain warping.
+      See references/webgl-backgrounds.md to change the visual style.
+   */
     const VS = `attribute vec2 position;void main(){gl_Position=vec4(position,0.0,1.0);}`;
 
     const FS_DARK = `precision highp float;
@@ -3835,13 +3867,13 @@ void main(){
     startGL();
     addEventListener('ppt-low-power-change', e => { e.detail.on ? stopGL() : startGL(); });
 
-    // =============== 导航（翻页 / 圆点 / 键盘 / 滚轮 / 触屏） ===============
+    // =============== Navigation: buttons, keyboard, wheel, and touch ===============
     const deck = document.getElementById('deck');
     const slides = deck.querySelectorAll('.slide');
     const nav = document.getElementById('nav');
     let idx = 0, total = slides.length, lock = false;
 
-    // 关键：矫正 deck 宽度为 total * 100vw，否则翻页会错位
+    // Match the deck width to the slide count to keep navigation aligned.
     deck.style.width = (total * 100) + 'vw';
 
     slides.forEach((s, i) => {
@@ -3858,17 +3890,17 @@ void main(){
       window.__currentSlideIndex = idx;
       deck.style.transform = `translateX(${-idx * 100}vw)`;
       nav.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
-      /* 主题切换：优先读 data-theme，其次从 class（light/dark）推断 */
+      /* Prefer data-theme; otherwise infer the theme from the slide class. */
       const el = slides[idx];
       const th = el.dataset.theme || (el.classList.contains('light') ? 'light' : (el.classList.contains('dark') ? 'dark' : 'dark'));
       document.body.classList.toggle('light-bg', th === 'light');
-      /* 动效：翻页过渡中段触发当前页的入场动画（由 motion-boot 注册） */
+      /* Start the current slide's entrance animation midway through the transition. */
       if (window.__playSlide) setTimeout(() => window.__playSlide(idx), 450);
       window.__pptPresenter?.onSlideChange(idx);
       if (!opts.force) { lock = true; setTimeout(() => lock = false, 700); }
     }
 
-    /* =============== ESC 索引视图 =============== */
+    /* =============== Escape overview =============== */
     let overviewOn = false;
     const ov = document.createElement('div');
     ov.id = 'overview';
@@ -3906,7 +3938,7 @@ void main(){
       else { ov.style.display = 'none'; }
     }
 
-    /* =============== 演讲者模式 / 观众屏同步 =============== */
+    /* =============== Presenter mode and audience synchronization =============== */
     window.__pptPresenter = (() => {
       const query = new URLSearchParams(location.search);
       const requestedMode = query.get('mode') || 'deck';
@@ -4393,7 +4425,7 @@ void main(){
       }, 250);
       return { initMode, onSlideChange, handleKey, slideLabel, enterPresenter, reopenAudience, toggleOverview: togglePresenterOverview, debugState: () => ({ mode, idx, session, syncState: syncState(), timerRunning, rehearsalActive, presenterOverviewOn, autoEnabled, autoGlobalSeconds, autoRemainingMs, screenMode, annotationTool, circles: [...circles], audienceCircles: [...audienceCircles], layoutMode }) };
     })();
-    /* =============== /演讲者模式 / 观众屏同步 =============== */
+    /* =============== End presenter mode and audience synchronization =============== */
 
     addEventListener('keydown', e => {
       if (window.__pptPresenter?.handleKey(e)) return;
@@ -4438,7 +4470,7 @@ void main(){
       }
     }, { passive: true });
 
-    /* ?slide=N 直达（1-based），与 Swiss 模板行为一致 */
+    /* Support direct navigation with a 1-based ?slide=N parameter. */
     const initialSlideParam = new URLSearchParams(location.search).get('slide');
     const initialSlide = initialSlideParam ? Number(initialSlideParam) - 1 : 0;
     go(Number.isFinite(initialSlide) ? initialSlide : 0);
@@ -4454,11 +4486,11 @@ void main(){
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script>lucide.createIcons();</script>
 
-  <!-- ============ Motion One 动效引擎（本地优先,CDN 兜底） ============
-     加载策略:先 ./assets/motion.min.js(本地,离线可用),失败 fallback 到 jsDelivr CDN
-     加载完成后挂 window.__playSlide / window.__pipeAdvance,
-     导航脚本会在翻页中段调用 __playSlide(idx),键盘/滚轮/触屏会在翻页前调用 __pipeAdvance()
-     双双失败时会兜底把所有 [data-anim] 设为可见,不让动效破坏阅读
+  <!-- ============ Motion One animation engine: local first, CDN fallback ============
+      Load ./assets/motion.min.js first for offline use, then fall back to jsDelivr.
+      On load, expose window.__playSlide and window.__pipeAdvance.
+      Navigation calls __playSlide(idx) mid-transition and __pipeAdvance() before advancing.
+      If both sources fail, show all [data-anim] elements so content remains readable.
 -->
   <script type="module">
     let motion;
@@ -4569,7 +4601,7 @@ void main(){
       window.__playSlide = playSlide;
       window.__pipeAdvance = pipeAdvance;
 
-      // 首屏:go() 已跑过(同步),没来得及触发动效 → 这里补一下(尊重 ?slide=N)
+      // go() ran before animations were ready; play the initial slide now.
       playSlide(window.__currentSlideIndex || 0);
     }
   </script>

@@ -106,13 +106,12 @@ Compiler has loop invariant code motion. The array.size() function will be calle
 int hoursInDay = 24;
 int minutesInHour = 60;
 int secondsInMinute = 60;
-int millisecondsInSecond = 1000;
 
-int millisecondsInDay = hoursInDay * minutesInHour * secondsInMinute * millisecondsInSecond;
+int secondsInDay = hoursInDay * minutesInHour * secondsInMinute;
 ```
 
 ```c
-int millisecondsInDay = 86400000;
+int secondsInDay = 86400;
 ```
 Question: Which version is easier to understand? Does the first version do more work at runtime?
 
@@ -313,19 +312,39 @@ Question: Which has better performance? Why?
 Answer: The data is only pushed and iterated in a linear way and array push is O(1) and array is in a contiguous memory which is more cache friendly. set is usually implemented by hash map or RB-Tree. Hash map has hash value overhead and RB-Tree is O(logn). Moreover, hash map, RB-Tree and linked list are not memory contiguous as array.
 And most compilers doesn't have modeling and analysis of data structures. So if the data structures are chosen wrong, the code remains slow.
 ## code with side effect
+1
 ```c++
 log(...)
-//some code
-log(...)
+```
+2
+```c++
+int x;
+void foo(){
+    x = 10;
+}
+```
+3
+```c++
+void foo(int* p){
+    p = 5;
+}
+```
+
+4
+```c++
+void foo(){
+atomic<int> x;
+x = 7;
+}
 ```
 Question:
 
-Which kind of side effect does above code have? 
+Map following side effect to above code:
 Options:
 A: value assignment to global variable
 B: system IO
 C: multi thread atomic variable access
-D: creation and exit of process/thread
+D: memory alias analysis is a hard challenge for compiler
 Answer:
 All options are often seen side effect in code.
 On production, developers may be required to reduce log for better performance, this work can't be done by compiler, because compiler won't optimize out IO side effect.

@@ -1,5 +1,6 @@
 # Write Clean, Compile Smart
 This repo is a ppt which describes how compiler optimize code smartly, so that software developers can write their code in a clean way and don't need to consider micro optimizations. 
+This training doesn't require any compiler principle knowledge as prerequisite
 The example code is in C++ style pseudo code, but the content is programming language unrelated.
 
 Check the ppt [here](./index.html)
