@@ -348,3 +348,5 @@ D: memory alias analysis is a hard challenge for compiler
 Answer:
 All options are often seen side effect in code.
 On production, developers may be required to reduce log for better performance, this work can't be done by compiler, because compiler won't optimize out IO side effect.
+## summarize
+Don't optimize code by assumption. Only optimize code when you know what happens behind the code.

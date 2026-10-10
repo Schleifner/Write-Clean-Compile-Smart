@@ -3485,44 +3485,22 @@ val = <span class="tok-fn">getVelocity</span>();
       <div class="chrome">
         <div class="left">
           <span
-            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">Summary
-            & Takeaways</span>
+            style="font-family:var(--sans-en); font-weight:700; font-size:clamp(16px,1.2vw,22px); color:#2a1e13; letter-spacing:0.02em">Summary</span>
         </div>
         <div class="right">
           <span>14 / 14</span>
         </div>
       </div>
 
-      <div class="frame grid-3" style="margin-top:4vh; gap:3vw; align-content:center">
-        <div class="stat"
-          style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; padding:4vh 2.5vw; border-radius:4px">
-          <div class="m" style="color:#9a5725">01</div>
-          <div class="n" style="color:#2a1e13; font-size:4vw; line-height:1">CLARITY</div>
-          <div class="l" style="color:#493526; font-size:clamp(16px,1.2vw,20px); line-height:1.6">
-            Write clear, intent-revealing code. Clean semantics let compilers analyze invariants and optimize
-            aggressively.
-          </div>
-        </div>
-
-        <div class="stat"
-          style="background:#fffdfa; border:1px solid #d8cfc2; border-top:4px solid #9a5725; padding:4vh 2.5vw; border-radius:4px">
-          <div class="m" style="color:#9a5725">02</div>
-          <div class="n" style="color:#2a1e13; font-size:4vw; line-height:1">TRUST</div>
-          <div class="l" style="color:#493526; font-size:clamp(16px,1.2vw,20px); line-height:1.6">
-            Stop counterproductive micro-optimizations. Manual bit tricks, XOR swaps, and variable reuses harm
-            readability without performance gains.
-          </div>
-        </div>
-
-        <div class="stat"
-          style="background:#fffdfa; border:1px solid #cbb79f; border-top:4px solid #9a5725; padding:4vh 2.5vw; border-radius:4px">
-          <div class="m" style="color:#9a5725">03</div>
-          <div class="n" style="color:#9a5725; font-size:4vw; line-height:1">BOUNDARIES</div>
-          <div class="l" style="color:#493526; font-size:clamp(16px,1.2vw,20px); line-height:1.6">
-            Compilers optimize tactical details; engineers own architecture. Focus on data structures, algorithmic
-            complexity, and IO side effects.
-          </div>
-        </div>
+      <div style="margin:auto 0; width:100%; text-align:center; padding:0 4vw">
+        <p
+          style="font-family:var(--serif-en); font-weight:600; color:#2a1e13; font-size:clamp(34px,5.2vw,78px); line-height:1.2">
+          Don't optimize code by assumption.
+        </p>
+        <p
+          style="margin-top:3vh; font-family:var(--serif-body-en); font-weight:400; color:#493526; font-size:clamp(25px,3.2vw,48px); line-height:1.35">
+          Only optimize code when you know what happens behind the code.
+        </p>
       </div>
 
       <div class="foot">
@@ -3722,14 +3700,12 @@ val = <span class="tok-fn">getVelocity</span>();
       },
       {
         "id": "closing",
-        "title": "Core Principles",
+        "title": "Summary",
         "section": "Summary",
         "minutes": 3.5,
-        "purpose": "Summarize the overarching principles: write clean code, trust compiler optimizations, and own architecture",
+        "purpose": "Close with the author's summary on evidence-based optimization",
         "talk": [
-          "Clarity: write code for human readers. Clear logic gives compilers the invariants needed for optimization.",
-          "Trust: leave register allocation, inlining, and strength reduction to the toolchain.",
-          "Boundaries: focus your engineering energy on data structures, algorithmic complexity, and system IO."
+          "Don't optimize code by assumption. Only optimize code when you know what happens behind the code."
         ],
         "transition": "Open the floor for questions and free discussion",
         "cue": "Invite audience questions and discuss real-world codebase examples"
