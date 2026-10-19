@@ -86,14 +86,14 @@ Answer: On modern processors, a normal variable swap can be handled efficiently 
 ## how to iterate over an array
 ```c++
 for(int i = 0;i<array.size();i++){
-
+  use(array[i]);
 }
 ```
 
 ```c++
 int size = array.size();
 for(int i = 0;i<size;i++){
-    
+  use(array[i]);
 }
 ```
 Question: which one is faster? why?
